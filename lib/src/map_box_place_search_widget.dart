@@ -122,9 +122,13 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget> with 
             alignment: Alignment.center,
             child: Column(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: child,
+                SizedBox(
+                  height: this.widget.searchHeight,
+                  width: this.widget.width,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: child,
+                  ),
                 ),
                 SizedBox(height: 10),
                 Expanded(
