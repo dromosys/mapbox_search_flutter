@@ -12,8 +12,6 @@ class MapBoxPlaceSearchWidget extends StatefulWidget {
     this.popOnSelect = false,
     this.location,
     this.country,
-    this.searchHeight,
-    this.width,
   });
 
   /// True if there is different search screen and you want to pop screen on select
@@ -48,10 +46,6 @@ class MapBoxPlaceSearchWidget extends StatefulWidget {
   ///Font Size
   final String fontSize;
 
-  final double searchHeight;
-
-  final double width;
-
   @override
   _MapBoxPlaceSearchWidgetState createState() => _MapBoxPlaceSearchWidgetState();
 }
@@ -76,7 +70,7 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget> with 
   void initState() {
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     _containerHeight =
-        Tween<double>(begin: 73, end: widget.height ?? MediaQuery.of(widget.context).size.height - 60 ?? 300).animate(
+        Tween<double>(begin: 50, end: widget.height ?? MediaQuery.of(widget.context).size.height - 60 ?? 300).animate(
       CurvedAnimation(
         curve: Interval(0.0, 0.5, curve: Curves.easeInOut),
         parent: _animationController,
@@ -118,17 +112,13 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget> with 
           return Container(
             height: _containerHeight.value,
             decoration: _containerDecoration(),
-            padding: EdgeInsets.only(left: 0, right: 0, top: 15),
+            padding: EdgeInsets.only(left: 0, right: 0, top: 8),
             alignment: Alignment.center,
             child: Column(
               children: <Widget>[
-                SizedBox(
-                  height: this.widget.searchHeight,
-                  width: this.widget.width,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                    child: child,
-                  ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: child,
                 ),
                 SizedBox(height: 10),
                 Expanded(
@@ -153,9 +143,7 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget> with 
     return Center(
       child: Row(
         children: <Widget>[
-          SizedBox(
-            height: this.widget.searchHeight,
-            width: this.widget.width,
+          Expanded(
             child: TextField(
               decoration: _inputStyle(),
               controller: _textEditingController,
@@ -226,7 +214,7 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget> with 
     return BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.all(Radius.circular(6.0)),
-      boxShadow: [BoxShadow(color: Colors.black, blurRadius: 0, spreadRadius: 0)],
+      boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.102), blurRadius: 10, offset: Offset(0, 4))],
     );
   }
 
