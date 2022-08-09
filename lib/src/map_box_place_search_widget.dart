@@ -149,29 +149,27 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget> with 
     return Center(
       child: Row(
         children: <Widget>[
-          Expanded(
-            child: SizedBox(
-              height: this.widget.searchHeight,
-              width: this.widget.width,
-              child: TextField(
-                decoration: _inputStyle(),
-                controller: _textEditingController,
-                style: TextStyle(
-                  fontSize: widget.fontSize ?? MediaQuery.of(context).size.width * 0.04,
-                ),
-                onChanged: (value) async {
-                  _debounceTimer?.cancel();
-                  _debounceTimer = Timer(
-                    Duration(milliseconds: 750),
-                    () async {
-                      await _autocompletePlace(value);
-                      if (mounted) {
-                        setState(() {});
-                      }
-                    },
-                  );
-                },
+          SizedBox(
+            height: this.widget.searchHeight,
+            width: this.widget.width,
+            child: TextField(
+              decoration: _inputStyle(),
+              controller: _textEditingController,
+              style: TextStyle(
+                fontSize: widget.fontSize ?? MediaQuery.of(context).size.width * 0.04,
               ),
+              onChanged: (value) async {
+                _debounceTimer?.cancel();
+                _debounceTimer = Timer(
+                  Duration(milliseconds: 750),
+                  () async {
+                    await _autocompletePlace(value);
+                    if (mounted) {
+                      setState(() {});
+                    }
+                  },
+                );
+              },
             ),
           ),
           Container(width: 15),
