@@ -12,6 +12,8 @@ class MapBoxPlaceSearchWidget extends StatefulWidget {
     this.popOnSelect = false,
     this.location,
     this.country,
+    this.searchHeight,
+    this.width,
   });
 
   /// True if there is different search screen and you want to pop screen on select
@@ -46,13 +48,15 @@ class MapBoxPlaceSearchWidget extends StatefulWidget {
   ///Font Size
   final String fontSize;
 
+  final double searchHeight;
+
+  final double width;
+
   @override
-  _MapBoxPlaceSearchWidgetState createState() =>
-      _MapBoxPlaceSearchWidgetState();
+  _MapBoxPlaceSearchWidgetState createState() => _MapBoxPlaceSearchWidgetState();
 }
 
-class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget>
-    with SingleTickerProviderStateMixin {
+class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget> with SingleTickerProviderStateMixin {
   TextEditingController _textEditingController = TextEditingController();
   AnimationController _animationController;
 
@@ -70,14 +74,9 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget>
 
   @override
   void initState() {
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-    _containerHeight = Tween<double>(
-            begin: 73,
-            end: widget.height ??
-                MediaQuery.of(widget.context).size.height - 60 ??
-                300)
-        .animate(
+    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    _containerHeight =
+        Tween<double>(begin: 73, end: widget.height ?? MediaQuery.of(widget.context).size.height - 60 ?? 300).animate(
       CurvedAnimation(
         curve: Interval(0.0, 0.5, curve: Curves.easeInOut),
         parent: _animationController,
@@ -135,8 +134,7 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget>
                       // addSemanticIndexes: true,
                       // itemExtent: 10,
                       children: <Widget>[
-                        for (var places in _placePredictions)
-                          _placeOption(places),
+                        for (var places in _placePredictions) _placeOption(places),
                       ],
                     ),
                   ),
@@ -152,25 +150,28 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget>
       child: Row(
         children: <Widget>[
           Expanded(
-            child: TextField(
-              decoration: _inputStyle(),
-              controller: _textEditingController,
-              style: TextStyle(
-                fontSize:
-                    widget.fontSize ?? MediaQuery.of(context).size.width * 0.04,
+            child: SizedBox(
+              height: this.widget.searchHeight,
+              width: this.widget.width,
+              child: TextField(
+                decoration: _inputStyle(),
+                controller: _textEditingController,
+                style: TextStyle(
+                  fontSize: widget.fontSize ?? MediaQuery.of(context).size.width * 0.04,
+                ),
+                onChanged: (value) async {
+                  _debounceTimer?.cancel();
+                  _debounceTimer = Timer(
+                    Duration(milliseconds: 750),
+                    () async {
+                      await _autocompletePlace(value);
+                      if (mounted) {
+                        setState(() {});
+                      }
+                    },
+                  );
+                },
               ),
-              onChanged: (value) async {
-                _debounceTimer?.cancel();
-                _debounceTimer = Timer(
-                  Duration(milliseconds: 750),
-                  () async {
-                    await _autocompletePlace(value);
-                    if (mounted) {
-                      setState(() {});
-                    }
-                  },
-                );
-              },
             ),
           ),
           Container(width: 15),
@@ -192,9 +193,7 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget>
       onPressed: () => _selectPlace(prediction),
       child: ListTile(
         title: Text(
-          place.length < 45
-              ? "$place"
-              : "${place.replaceRange(45, place.length, "")} ...",
+          place.length < 45 ? "$place" : "${place.replaceRange(45, place.length, "")} ...",
           style: TextStyle(fontSize: MediaQuery.of(context).size.width * 0.04),
           maxLines: 1,
         ),
@@ -216,7 +215,7 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget>
   InputDecoration _inputStyle() {
     return InputDecoration(
       hintText: widget.searchHint,
-      border: InputBorder.none,
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
       contentPadding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
     );
   }
@@ -225,9 +224,7 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget>
     return BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.all(Radius.circular(6.0)),
-      boxShadow: [
-        BoxShadow(color: Colors.black, blurRadius: 0, spreadRadius: 0)
-      ],
+      boxShadow: [BoxShadow(color: Colors.black, blurRadius: 0, spreadRadius: 0)],
     );
   }
 
