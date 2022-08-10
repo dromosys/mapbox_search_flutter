@@ -142,35 +142,39 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget> with 
 
   Widget _searchInput(BuildContext context) {
     return Center(
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: TextField(
-              decoration: _inputStyle(),
-              controller: _textEditingController,
-              style: TextStyle(
-                fontSize: widget.fontSize ?? MediaQuery.of(context).size.width * 0.04,
+      child: Container(
+        height: 50,
+        color: Colors.blue,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: TextField(
+                decoration: _inputStyle(),
+                controller: _textEditingController,
+                style: TextStyle(
+                  fontSize: widget.fontSize ?? MediaQuery.of(context).size.width * 0.04,
+                ),
+                onChanged: (value) async {
+                  _debounceTimer?.cancel();
+                  _debounceTimer = Timer(
+                    Duration(milliseconds: 750),
+                    () async {
+                      await _autocompletePlace(value);
+                      if (mounted) {
+                        setState(() {});
+                      }
+                    },
+                  );
+                },
               ),
-              onChanged: (value) async {
-                _debounceTimer?.cancel();
-                _debounceTimer = Timer(
-                  Duration(milliseconds: 750),
-                  () async {
-                    await _autocompletePlace(value);
-                    if (mounted) {
-                      setState(() {});
-                    }
-                  },
-                );
-              },
             ),
-          ),
-          Container(width: 15),
-          GestureDetector(
-            child: Icon(Icons.search, color: Colors.blue),
-            onTap: () {},
-          )
-        ],
+            Container(width: 15),
+            GestureDetector(
+              child: Icon(Icons.search, color: Colors.blue),
+              onTap: () {},
+            )
+          ],
+        ),
       ),
     );
   }
@@ -206,14 +210,19 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget> with 
   InputDecoration _inputStyle() {
     return InputDecoration(
       hintText: widget.searchHint,
-      border: InputBorder.none,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide(
+          color: Colors.grey,
+        ),
+      ),
       contentPadding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
     );
   }
 
   BoxDecoration _containerDecoration() {
     return BoxDecoration(
-      color: Colors.yellow,
+      color: Colors.green,
       borderRadius: BorderRadius.all(Radius.circular(6.0)),
       boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.102), blurRadius: 10, offset: Offset(0, 4))],
     );
