@@ -1,18 +1,18 @@
 part of mapbox_search_flutter;
 
 class MapBoxPlaceSearchWidget extends StatefulWidget {
-  MapBoxPlaceSearchWidget({
-    @required this.apiKey,
-    this.onSelected,
-    // this.onSearch,
-    this.fontSize,
-    this.searchHint = 'Search',
-    this.context,
-    this.height,
-    this.popOnSelect = false,
-    this.location,
-    this.country,
-  });
+  MapBoxPlaceSearchWidget(
+      {@required this.apiKey,
+      this.onSelected,
+      // this.onSearch,
+      this.fontSize,
+      this.searchHint = 'Search',
+      this.context,
+      this.height,
+      this.popOnSelect = false,
+      this.location,
+      this.country,
+      this.width});
 
   /// True if there is different search screen and you want to pop screen on select
   final bool popOnSelect;
@@ -45,6 +45,7 @@ class MapBoxPlaceSearchWidget extends StatefulWidget {
 
   ///Font Size
   final String fontSize;
+  final double width;
 
   @override
   _MapBoxPlaceSearchWidgetState createState() => _MapBoxPlaceSearchWidgetState();
@@ -98,7 +99,7 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget> with 
   @override
   Widget build(BuildContext context) => Container(
         padding: EdgeInsets.symmetric(horizontal: 5),
-        width: MediaQuery.of(context).size.width,
+        width: this.widget.width,
         child: _searchContainer(
           child: _searchInput(context),
         ),
@@ -212,7 +213,7 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget> with 
 
   BoxDecoration _containerDecoration() {
     return BoxDecoration(
-      color: Colors.white,
+      color: Colors.red,
       borderRadius: BorderRadius.all(Radius.circular(6.0)),
       boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.102), blurRadius: 10, offset: Offset(0, 4))],
     );
