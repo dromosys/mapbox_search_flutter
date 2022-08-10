@@ -71,7 +71,7 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget> with 
   void initState() {
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     _containerHeight =
-        Tween<double>(begin: 50, end: widget.height ?? MediaQuery.of(widget.context).size.height - 50 ?? 300).animate(
+        Tween<double>(begin: 73, end: widget.height ?? MediaQuery.of(widget.context).size.height - 60 ?? 300).animate(
       CurvedAnimation(
         curve: Interval(0.0, 0.5, curve: Curves.easeInOut),
         parent: _animationController,
@@ -213,7 +213,7 @@ class _MapBoxPlaceSearchWidgetState extends State<MapBoxPlaceSearchWidget> with 
 
   BoxDecoration _containerDecoration() {
     return BoxDecoration(
-      color: Colors.red,
+      color: Colors.green,
       borderRadius: BorderRadius.all(Radius.circular(6.0)),
       boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.102), blurRadius: 10, offset: Offset(0, 4))],
     );
