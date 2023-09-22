@@ -1,4 +1,4 @@
-[![Pub](https://img.shields.io/pub/v/mapbox_search_flutter)](https://pub.dartlang.org/packages/mapbox_search_flutter) [![HitCount](http://hits.dwyl.com/ketanchoyal/mapbox_search_flutter.svg)](http://hits.dwyl.com/ketanchoyal/mapbox_search_flutter)
+[![Pub](https://img.shields.io/pub/v/mapbox_search_widget)](https://pub.dartlang.org/packages/mapbox_search_widget) [![HitCount](http://hits.dwyl.com/ketanchoyal/mapbox_search_widget.svg)](http://hits.dwyl.com/ketanchoyal/mapbox_search_widget)
  <a href="https://flutterawesome.com/a-flutter-package-for-place-search-using-mapbox-api-and-for-static-map-image/">
    <img alt="Awesome Flutter" src="https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square" />
 </a>
@@ -16,7 +16,7 @@ Also, it contains an static map image generator 😆.
 Add the following to your `pubspec.yaml` file:
 
     dependencies:
-      mapbox_search_flutter: any
+      mapbox_search_widget: any
 
 # Example
 ```dart

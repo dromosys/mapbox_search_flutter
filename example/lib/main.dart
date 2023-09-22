@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' hide Color;
-import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
+import 'package:mapbox_search_widget/mapbox_search_widget.dart';
 
 void main() => runApp(MyApp());
 

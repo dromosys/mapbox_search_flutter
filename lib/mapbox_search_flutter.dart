@@ -1,4 +1,4 @@
-library mapbox_search_flutter;
+library mapbox_search_widget;
 
 import 'dart:async';
 

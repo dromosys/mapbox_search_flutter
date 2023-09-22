@@ -1,4 +1,4 @@
-part of mapbox_search_flutter;
+part of mapbox_search_widget;
 
 class MapBoxPlaceSearchWidget extends StatefulWidget {
   MapBoxPlaceSearchWidget(
